@@ -1,0 +1,35 @@
+{% extends 'wrapper.html' %}
+{% load NoneTrueFalse %}
+
+{% block title %}Книга{% endblock %}
+
+{% block content %}
+<div style="position: relative; top: 50px; left: 300px">
+    <img src='{{ object.image.url }}' height="450" width="300"/>
+</div>
+<div style="position: relative; top: 5px; left: 900px">
+    <h1>{{ object.name }}</h1>
+</div><br>
+{{ object.description | boolparser }}<br>
+{{ object.price }}<br>
+{% for object in object.author.all %}
+{{ object }}<br>
+{% endfor %}
+{% for object in object.genre.all %}
+{{ object }}<br>
+{% endfor %}
+{{ object.series | boolparser }}<br>
+{{ object.publishing }}<br>
+{{ object.year }}<br>
+{{ object.pages }}<br>
+{{ object.binding }}<br>
+{{ object.format }}<br>
+{{ object.isbn }}<br>
+{{ object.weight }}<br>
+{{ object.age_limit }}<br>
+{{ object.sum }}<br>
+{{ object.active | boolparser }}<br>
+{{ object.rating }}<br>
+{{ object.creation_date }}<br>
+{{ object.update_date }}
+{% endblock %}

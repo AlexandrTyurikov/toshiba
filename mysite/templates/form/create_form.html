@@ -1,0 +1,14 @@
+{% extends 'wrapper.html' %}
+
+{% block title %}Добавить{% endblock %}
+
+{% block content %}
+<form action="" method="POST" style="border-radius: 7px">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-outline-success btn-lg my-2 my-sm-0 shadow" type="submit">Сохранить</button>
+    <button class="btn btn-outline-success btn-lg my-2 my-sm-0 shadow" type="button" onclick="history.back()">Я
+        передумал
+    </button>
+</form>
+{% endblock %}

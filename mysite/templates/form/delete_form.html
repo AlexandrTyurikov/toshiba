@@ -1,0 +1,15 @@
+{% extends 'wrapper.html' %}
+
+{% block title %}Удалить{% endblock %}
+
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    Вы действительно хотите удалить?<br><br>
+    <button class="btn btn-outline-success btn-lg my-2 my-sm-0 shadow" type="submit">Да, удалить</button>
+    <button class="btn btn-outline-success btn-lg my-2 my-sm-0 shadow" type="button" onclick="history.back()">Нет, я
+        передумал
+    </button>
+</form>
+{% endblock %}
