@@ -1,13 +1,13 @@
-{% extends 'wrapper.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Справочники{% endblock %}
 
 {% block content %}
 <div class="list-group btn-group-lg shadow-lg mx-auto" style="width: 250px">
     <li class="list-group-item active">Справочники</li>
-    <a href="{% url 'author_lv' %}" class="list-group-item list-group-item-action">Авторы</a>
-    <a href="{% url 'series_lv' %}" class="list-group-item list-group-item-action">Серии</a>
-    <a href="{% url 'genre_lv' %}" class="list-group-item list-group-item-action">Жанры</a>
-    <a href="{% url 'publishing_lv' %}" class="list-group-item list-group-item-action">Издательства</a>
+    <a href="{% url 'author-list' %}" class="list-group-item list-group-item-action">Авторы</a>
+    <a href="{% url 'series-list' %}" class="list-group-item list-group-item-action">Серии</a>
+    <a href="{% url 'genre-list' %}" class="list-group-item list-group-item-action">Жанры</a>
+    <a href="{% url 'publishing-list' %}" class="list-group-item list-group-item-action">Издательства</a>
 </div>
 {% endblock %}

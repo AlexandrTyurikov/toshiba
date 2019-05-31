@@ -10,7 +10,7 @@ class Author(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse_lazy('author_dv', kwargs={'pk': self.pk})
+        return reverse_lazy('author-detail', kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name = 'Автор'
@@ -25,7 +25,7 @@ class Series(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse_lazy('series_dv', kwargs={'pk': self.pk})
+        return reverse_lazy('series-detail', kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name = 'Серия'
@@ -40,7 +40,7 @@ class Genre(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse_lazy('genre_dv', kwargs={'pk': self.pk})
+        return reverse_lazy('genre-detail', kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name = 'Жанр'
@@ -55,7 +55,7 @@ class Publishing(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse_lazy('publishing_dv', kwargs={'pk': self.pk})
+        return reverse_lazy('publishing-detail', kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name = 'Издательство'

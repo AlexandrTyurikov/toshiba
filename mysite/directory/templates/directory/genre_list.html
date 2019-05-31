@@ -1,16 +1,21 @@
-{% extends 'wrapper.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Жанры{% endblock %}
 
 {% block content %}
-<form action="" method="get" class="form-inline">
-    {{ form }}
-    <input class="form-control mr-sm-2 btn-lg shadow" type="search" placeholder="Введите ключевое слово"
-           aria-label="Search"
-           name="sss">
-    <button class="btn btn-outline-success btn-lg my-2 my-sm-0 shadow" type="submit">Поиск</button>
-</form><br>
-<table class="table table-secondary shadow" style="width: auto; border-radius: 7px">
+<div class="form-inline">
+    <form action="" method="get" class="form-inline">
+        {{ form }}
+        <input class="form-control mr-sm-2 btn-lg shadow" type="search" placeholder="Поиск"
+               aria-label="Search"
+               name="sss">
+        <button class="btn btn-outline-secondary shadow" type="submit"><i class="fas fa-search"></i></button>
+    </form>
+    <a style="position: relative; margin-left: auto" href="{% url 'genre-create' %}">
+        <button class="btn btn-outline-success btn-lg my-2 my-sm-0 shadow" type="submit">Добавить</button>
+    </a>
+</div><br>
+<table class="table shadow" style="width: auto; border-radius: 7px">
     <thead>
     <tr>
         <th>ID</th>
@@ -24,15 +29,13 @@
         <td>{{ object.pk }}</td>
         <td>{{ object.name }}</td>
         <td>
-            <a href="{% url 'genre_dv' object.pk %}"><i class="far fa-eye"></i></a>&nbsp;
-            <a href="{% url 'genre_uv' object.pk %}"><i class="fas fa-pencil-alt"></i></a>&nbsp;
-            <a href="{% url 'genre_del_v' object.pk %}"><i class="fas fa-trash-alt"></i></a>
+            <a class="btn btn-outline-info" href="{% url 'genre-detail' object.pk %}"><i class="far fa-eye"></i></a>&nbsp;&nbsp;
+            <a class="btn btn-outline-warning" href="{% url 'genre-update' object.pk %}"><i
+                    class="fas fa-pencil-alt"></i></a>&nbsp;&nbsp;
+            <a class="btn btn-outline-danger" href="{% url 'genre-delete' object.pk %}"><i class="fas fa-trash-alt"></i></a>
         </td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
-<a href="{% url 'genre_cv' %}">
-    <button class="btn btn-outline-success btn-lg my-2 my-sm-0 shadow" type="submit">Добавить</button>
-</a>
 {% endblock %}

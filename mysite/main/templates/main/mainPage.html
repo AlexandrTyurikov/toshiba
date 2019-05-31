@@ -1,50 +1,42 @@
-{% extends 'wrapper.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Главнвя{% endblock %}
 
 {% block content %}
+{{ object.book_in_cart_count }}
 <h2>Главная страница</h2><br>
 <form action="" method="get" class="form-inline">
     {{ form }}
-    <input class="form-control btn-lg mr-sm-2 shadow" type="search" placeholder="Введите ключевое слово"
+    <input class="form-control btn-lg mr-sm-2 shadow" type="search" placeholder="Поиск"
            aria-label="Search"
            name="nnn">
-    <button class="btn btn-outline-success btn-lg my-2 my-sm-4 shadow " type="submit">Поиск</button>
+    <button class="btn btn-outline-secondary my-2 my-sm-4 shadow " type="submit"><i class="fas fa-search"></i></button>
 </form>
-<div class="card-deck " style="width: 700px">
+<div class="card-columns" style="display: inline">
     {% for object in object_list %}
-    <div class="card shadow" style="width: 500px;">
-        <img src="{{ object.image.url }}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">{{object.name}}</h5>
-            <p class="card-text">Цена - {{ object.price }}</p>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-        <div class="card-body">
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-        </div>
+    <div class="card shadow text-center" style="width: 15rem; background: #e5fcff">
+        <a href="{% url 'book-detail' object.pk %}" style="text-decoration: none">
+            <img src="{{ object.image.url }}" class="card-img-top" alt="..." height="280">
+            <div class="card-body">
+                <h5 class="card-title">{{object.name}}</h5>
+                <p class="card-text">
+                    {% for object in object.author.all %}
+                    <small>Автор - {{object}}</small>
+                    {% endfor %}
+                </p>
+                <p class="card-text">Рейтинг - {{object.rating}}</p>
+            </div>
+        </a>
+        <a href="{% url 'add-to-cart' object.pk %}?next=/main/" class="card-link">
+            <div class="card-footer">
+                <h5>{{ object.price }}&nbsp;&nbsp; <i class="fas fa-shopping-cart"></i>&nbsp;В корзину</h5>
+            </div>
+        </a>
     </div>
-
-    <!--<div class="card mb-4 shadow" style="max-width: 700px;" >-->
-    <!--  <div class="row no-gutters" >-->
-    <!--    <div class="col-md-4" >-->
-    <!--      <img src="{{ object.image.url }}" class="card-img" alt="...">-->
-    <!--    </div>-->
-    <!--    <div class="col-md-8" >-->
-    <!--      <div class="card-body " >-->
-    <!--        <h5 class="card-title">{{object.name}}</h5>-->
-    <!--        <p class="card-text">Цена - {{ object.price }}</p>-->
-    <!--        <p class="card-text">Автор - {% for object in object.author.all %}{{ object }}{% endfor %}</p>-->
-    <!--        <a href="{% url 'book_dv' object.pk %}" class="btn btn-info">Узнать подробнее про книгу</a>-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <!--  </div>-->
-    <!--</div>-->
     {% endfor %}
 </div>
+<br>
+<p class="text-center">
+    <small>&Xi;tyur&Xi;</small>
+</p>
 {% endblock %}

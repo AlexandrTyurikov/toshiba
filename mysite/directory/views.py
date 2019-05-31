@@ -1,27 +1,28 @@
 from django.views.generic import DetailView, ListView, TemplateView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.db.models import Q
 from .models import Author, Series, Genre, Publishing
 from .forms import AuthorCrUpForm, SeriesCrUpForm, GenreCrUpForm, PublishingCrUpForm
-from django.db.models import Q
+from cart.views import CountInCart
 
 
-class AuthorDetail(DetailView):
+class AuthorDetail(CountInCart, DetailView):
     model = Author
 
 
-class SeriesDetail(DetailView):
+class SeriesDetail(CountInCart, DetailView):
     model = Series
 
 
-class GenreDetail(DetailView):
+class GenreDetail(CountInCart, DetailView):
     model = Genre
 
 
-class PublishingDetail(DetailView):
+class PublishingDetail(CountInCart, DetailView):
     model = Publishing
 
 
-class SearchLV(ListView):
+class SearchLV(CountInCart, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -47,101 +48,101 @@ class PublishingList(SearchLV):
     model = Publishing
 
 
-class AllDirectoryView(TemplateView):
+class AllDirectoryView(CountInCart, TemplateView):
     template_name = 'directory/all_directory_view.html'
 
 
-class AuthorCreate(CreateView):
+class AuthorCreate(CountInCart, CreateView):
     model = Author
     form_class = AuthorCrUpForm
     template_name = 'form/create_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('author_lv')
+        return reverse_lazy('author-list')
 
 
-class SeriesCreate(CreateView):
+class SeriesCreate(CountInCart, CreateView):
     model = Series
     form_class = SeriesCrUpForm
     template_name = 'form/create_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('series_lv')
+        return reverse_lazy('series-list')
 
 
-class GenreCreate(CreateView):
+class GenreCreate(CountInCart, CreateView):
     model = Genre
     form_class = GenreCrUpForm
     template_name = 'form/create_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('genre_lv')
+        return reverse_lazy('genre-list')
 
 
-class PublishingCreate(CreateView):
+class PublishingCreate(CountInCart, CreateView):
     model = Publishing
     form_class = PublishingCrUpForm
     template_name = 'form/create_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('publishing_lv')
+        return reverse_lazy('publishing-list')
 
 
-class AuthorUpdate(UpdateView):
+class AuthorUpdate(CountInCart, UpdateView):
     model = Author
     form_class = AuthorCrUpForm
     template_name = 'form/update_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('author_lv')
+        return reverse_lazy('author-list')
 
 
-class SeriesUpdate(UpdateView):
+class SeriesUpdate(CountInCart, UpdateView):
     model = Series
     form_class = SeriesCrUpForm
     template_name = 'form/update_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('series_lv')
+        return reverse_lazy('series-list')
 
 
-class GenreUpdate(UpdateView):
+class GenreUpdate(CountInCart, UpdateView):
     model = Genre
     form_class = GenreCrUpForm
     template_name = 'form/update_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('genre_lv')
+        return reverse_lazy('genre-list')
 
 
-class PublishingUpdate(UpdateView):
+class PublishingUpdate(CountInCart, UpdateView):
     model = Publishing
     form_class = PublishingCrUpForm
     template_name = 'form/update_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('publishing_lv')
+        return reverse_lazy('publishing-list')
 
 
-class AuthorDelete(DeleteView):
+class AuthorDelete(CountInCart, DeleteView):
     model = Author
-    success_url = reverse_lazy('author_lv')
+    success_url = reverse_lazy('author-list')
     template_name = 'form/delete_form.html'
 
 
-class SeriesDelete(DeleteView):
+class SeriesDelete(CountInCart, DeleteView):
     model = Series
-    success_url = reverse_lazy('series_lv')
+    success_url = reverse_lazy('series-list')
     template_name = 'form/delete_form.html'
 
 
-class GenreDelete(DeleteView):
+class GenreDelete(CountInCart, DeleteView):
     model = Genre
-    success_url = reverse_lazy('genre_lv')
+    success_url = reverse_lazy('genre-list')
     template_name = 'form/delete_form.html'
 
 
-class PublishingDelete(DeleteView):
+class PublishingDelete(CountInCart, DeleteView):
     model = Publishing
-    success_url = reverse_lazy('publishing_lv')
+    success_url = reverse_lazy('publishing-list')
     template_name = 'form/delete_form.html'

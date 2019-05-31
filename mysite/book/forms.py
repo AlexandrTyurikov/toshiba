@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import ModelForm
 from .models import *
 
 
@@ -12,13 +11,14 @@ class SearchActiveForm(forms.Form):
 #     search = forms.CharField(label='Введите ключевое слово:', required=False)
 
 
-class BookCrUpForm(ModelForm):
+class BookCrUpForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = (
             'name',
             'image',
             'price',
+            'description',
             'author',
             'genre',
             'series',
@@ -34,27 +34,3 @@ class BookCrUpForm(ModelForm):
             'active',
             'rating'
         )
-
-
-# class BookUpdateForm(ModelForm):
-#     class Meta:
-#         model = Book
-#         fields = (
-#             'name',
-#             'image',
-#             'price',
-#             'author',
-#             'genre',
-#             'series',
-#             'publishing',
-#             'year',
-#             'pages',
-#             'binding',
-#             'format',
-#             'isbn',
-#             'weight',
-#             'age_limit',
-#             'sum',
-#             'active',
-#             'rating'
-#         )

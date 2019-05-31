@@ -8,6 +8,7 @@ class BookAdmin(admin.ModelAdmin):
         'creation_date',
         'update_date',
     )
+    list_filter = ('name',)
 
 #    class Meta:
 #        model = models.Book

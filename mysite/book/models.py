@@ -1,17 +1,19 @@
 from django.db import models
 from django.urls import reverse_lazy
+from directory.models import Author, Genre, Series, Publishing
 
 
 class Book(models.Model):
     name = models.CharField('Название книги', max_length=180)
     description = models.TextField('Аннотация', null=True, blank=True)
-    image = models.ImageField('Обложка', null=True, blank=True, upload_to='images')
+    image = models.ImageField('Обложка', null=True, blank=True, upload_to='media')
     price = models.DecimalField('Цена', max_digits=10, decimal_places=2)
-    author = models.ManyToManyField('directory.Author', related_name='directory', verbose_name='Автор')
-    genre = models.ManyToManyField('directory.Genre', related_name='directory', verbose_name='Жанр')
-    series = models.ForeignKey('directory.Series', null=True, blank=True, verbose_name='Серия',
+    author = models.ManyToManyField(Author, related_name='author', verbose_name='Автор')
+    genre = models.ManyToManyField(Genre, related_name='genre', verbose_name='Жанр')
+    series = models.ForeignKey(Series, related_name='series', null=True, blank=True, verbose_name='Серия',
                                on_delete=models.PROTECT)
-    publishing = models.ForeignKey('directory.Publishing', verbose_name='Издательство', on_delete=models.PROTECT)
+    publishing = models.ForeignKey(Publishing, related_name='publishing', verbose_name='Издательство',
+                                   on_delete=models.PROTECT)
     year = models.IntegerField('Год издания')
     pages = models.IntegerField('Страниц')
     binding = models.CharField('Переплет', max_length=40)
@@ -25,10 +27,13 @@ class Book(models.Model):
     creation_date = models.DateTimeField('Дата и время создания', auto_now=False, auto_now_add=True)
     update_date = models.DateTimeField('Дата и время изменения', auto_now=True, auto_now_add=False)
 
+    def __str__(self):
+        return self.name
+
     def get_absolute_url(self):
-        return reverse_lazy('book_dv', kwargs={'pk': self.pk})
+        return reverse_lazy('book-detail', kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name = 'Книга'
         verbose_name_plural = 'Книги'
-        ordering = ['-name']
+        ordering = ['-name']  # Сортировка

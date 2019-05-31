@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}ку-ку2{% endblock %}
+
+{% block content %}
+<h2 class="text-center">Оформление заказа</h2>
+<br>
+<div class="h5" style="padding: 0 150px">
+    <table class="table shadow" style="background: #e5fcff">
+        <thead>
+        <tr>
+            <th scope="col" style="width: 600px">Товары</th>
+            <th scope="col">Цена BYN</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Сумма всего</th>
+            <th scope="col">Удалить с корзины</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in cart.book_in_cart.all %}
+        <tr>
+            <td><img src="{{ object.book.image.url }}" height="100" width="70">&nbsp;&nbsp;
+                {% for object in object.book.author.all %}
+                {{ object }}
+                {% endfor %}&nbsp;
+                "{{ object.book.name }}"
+            </td>
+            <td>{{ object.book.price }}</td>
+            <td>
+                <form action="" method="POST" style="width: 133px;">
+                    {% csrf_token %}
+                    <input class="form-control" data-recalc="" step="1" min="1" max="999" name="item_180325"
+                           id="item_180325" type="number" value="{{ object.quantity }}">
+                </form>
+            </td>
+            <td>{{ object.price_total }}</td>
+            <td class="text-center">
+                <a class="btn btn-outline-danger" href="{% url 'book-in-cart-delete' object.pk %}">
+                    <i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <th>Итого</th>
+            <th></th>
+            <th>{{ object.book_in_cart_count }} шт.</th>
+            <th>{{ object.total_price }} BYN</th>
+            <th></th>
+        </tr>
+        </tbody>
+    </table>
+    <br><br>
+    {% if object.book_in_cart_count > 0 %}
+    <div style="padding: 0 180px">
+        <h3 class="text-center">Контактная информация</h3>
+        <hr>
+        <h6>* Поля обязательного заполнения</h6>
+        <form action="{% url 'order-create' %}" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-outline-success btn-lg shadow" type="submit">Подтвердить заказ
+                ({{ object.total_price }} BYN)
+            </button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

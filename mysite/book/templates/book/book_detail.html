@@ -1,35 +1,44 @@
-{% extends 'wrapper.html' %}
+{% extends 'base.html' %}
 {% load NoneTrueFalse %}
 
 {% block title %}Книга{% endblock %}
 
 {% block content %}
-<div style="position: relative; top: 50px; left: 300px">
-    <img src='{{ object.image.url }}' height="450" width="300"/>
+
+<div class="card mb-3" style="height: auto; width: 100%; background: #e5fcff">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+            <img src="{{ object.image.url }}" class="card-img" alt="..." height="700">
+            <a href="{% url 'add-to-cart' object.pk %}?next={% url 'book-detail' object.pk %}" class="card-link">
+                <div class="card-footer">
+                    <h5>{{ object.price }}&nbsp;&nbsp; <i class="fas fa-shopping-cart"></i>&nbsp;В корзину</h5>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body text-center">
+                <h2 class="card-title">{{ object.name }}</h2>
+                <p class="card-text">Цена - {{ object.pages }} р.</p>
+                {% for object in object.author.all %}
+                <p class="card-text">Автор - {{ object }}</p>{% endfor %}
+                <p class="card-text">{% for object in object.genre.all %}Жанр - {{ object }}{% endfor %}</p>
+                <p class="card-text">Серия - {{ object.series | boolparser }}</p>
+                <p class="card-text">Издательство - {{ object.publishing }}</p>
+                <p class="card-text">Год издания - {{ object.year }}</p>
+                <p class="card-text">Стр - {{ object.pages }}</p>
+                <p class="card-text">Переплет - {{ object.binding }}</p>
+                <p class="card-text">Формат - {{ object.format }}</p>
+                <p class="card-text">ISBN - {{ object.isbn }}</p>
+                <p class="card-text">Вес - {{ object.weight }} г.</p>
+                <p class="card-text">Возростное ограничение - {{ object.age_limit }}</p>
+                <p class="card-text">Количество книг в наличии - {{ object.sum }}</p>
+                <p class="card-text">Доступна для заказа - {{ object.active | boolparser }}</p>
+                <p class="card-text">Рейтинг - {{ object.rating }}</p>
+                <p class="card-text">Аннотация:</p><br><p class="card-text">{{ object.description }}</p>
+                <p class="card-text"></p>
+            </div>
+        </div>
+    </div>
 </div>
-<div style="position: relative; top: 5px; left: 900px">
-    <h1>{{ object.name }}</h1>
-</div><br>
-{{ object.description | boolparser }}<br>
-{{ object.price }}<br>
-{% for object in object.author.all %}
-{{ object }}<br>
-{% endfor %}
-{% for object in object.genre.all %}
-{{ object }}<br>
-{% endfor %}
-{{ object.series | boolparser }}<br>
-{{ object.publishing }}<br>
-{{ object.year }}<br>
-{{ object.pages }}<br>
-{{ object.binding }}<br>
-{{ object.format }}<br>
-{{ object.isbn }}<br>
-{{ object.weight }}<br>
-{{ object.age_limit }}<br>
-{{ object.sum }}<br>
-{{ object.active | boolparser }}<br>
-{{ object.rating }}<br>
-{{ object.creation_date }}<br>
-{{ object.update_date }}
+
 {% endblock %}

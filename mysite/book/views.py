@@ -1,15 +1,16 @@
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Book
-from .forms import SearchActiveForm, BookCrUpForm
 from django.db.models import Q
+from .forms import SearchActiveForm, BookCrUpForm
+from .models import Book
+from cart.views import CountInCart
 
 
-class BookDetail(DetailView):
+class BookDetail(CountInCart, DetailView):
     model = Book
 
 
-class BookList(ListView):
+class BookList(CountInCart, ListView):
     model = Book
 
     def get_queryset(self):
@@ -28,25 +29,25 @@ class BookList(ListView):
         return context
 
 
-class BookCreate(CreateView):
+class BookCreate(CountInCart, CreateView):
     model = Book
     form_class = BookCrUpForm
     template_name = 'form/create_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('book_lv')
+        return reverse_lazy('book-list')
 
 
-class BookUpdate(UpdateView):
+class BookUpdate(CountInCart, UpdateView):
     model = Book
     form_class = BookCrUpForm
     template_name = 'form/update_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('book_lv')
+        return reverse_lazy('book-list')
 
 
-class BookDelete(DeleteView):
+class BookDelete(CountInCart, DeleteView):
     model = Book
-    success_url = reverse_lazy('book_lv')
+    success_url = reverse_lazy('book-list')
     template_name = 'form/delete_form.html'

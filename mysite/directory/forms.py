@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import ModelForm
 from .models import Author, Series, Genre, Publishing
 
 
@@ -7,7 +6,7 @@ class SearchForm(forms.Form):
     search = forms.CharField(label='Введите ключевое слово', required=False)
 
 
-class AuthorCrUpForm(ModelForm):
+class AuthorCrUpForm(forms.ModelForm):
     class Meta:
         model = Author
         fields = (
@@ -16,7 +15,7 @@ class AuthorCrUpForm(ModelForm):
         )
 
 
-class SeriesCrUpForm(ModelForm):
+class SeriesCrUpForm(forms.ModelForm):
     class Meta:
         model = Series
         fields = (
@@ -25,7 +24,7 @@ class SeriesCrUpForm(ModelForm):
         )
 
 
-class GenreCrUpForm(ModelForm):
+class GenreCrUpForm(forms.ModelForm):
     class Meta:
         model = Genre
         fields = (
@@ -34,7 +33,7 @@ class GenreCrUpForm(ModelForm):
         )
 
 
-class PublishingCrUpForm(ModelForm):
+class PublishingCrUpForm(forms.ModelForm):
     class Meta:
         model = Publishing
         fields = (
