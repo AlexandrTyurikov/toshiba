@@ -39,7 +39,9 @@
         <td>{{ object.pk }}</td>
         <th scope="row">{{ object.name }}</th>
         {% if object.image %}
-        <td><img src='{{ object.image.url }}' height="120" width="80"/></td>
+            <td><img src='{{ object.image.url }}' height="120" width="80"/></td>
+        {% else %}
+            <td><img src='/media/images/no_images/no_cover1.jpg' height="120" width="80"/></td>
         {% endif %}
         <td>{{ object.price }}</td>
         <td>
@@ -55,15 +57,11 @@
         <td>
             <a class="btn btn-outline-info" href="{% url 'book-detail' object.pk %}"><i class="far fa-eye"></i></a>
             <a class="btn btn-outline-warning" href="{% url 'book-update' object.pk %}"><i
-                    class="fas fa-pencil-alt"></i></a>
+                    class="fas fa-pencil-alt"></i>
+            </a>
             <a class="btn btn-outline-danger" href="{% url 'book-delete' object.pk %}"><i
-                    class="fas fa-trash-alt"></i></a>
-<!--            (?next=/book/list/ для того чтобы отправляло туда где был, для каждой html свой адрес)-->
-<!--            <a href="{% url 'add-to-cart' object.pk %}?next=/book/list/" class="card-link">-->
-<!--                <div class="card-footer">-->
-<!--                    <h5>{{ object.price }}&nbsp;&nbsp; <i class="fas fa-shopping-cart"></i>&nbsp;В корзину</h5>-->
-<!--                </div>-->
-<!--            </a>-->
+                    class="fas fa-trash-alt"></i>
+            </a>
         </td>
     </tr>
     {% endfor %}

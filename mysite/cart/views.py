@@ -10,7 +10,6 @@ new_order_status = OrderStatus.objects.get(pk=2)
 
 
 class CountInCart:
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cart_id = self.request.session.get('cart_id', '0')
@@ -34,13 +33,28 @@ class AddBookToCart(CountInCart, UpdateView):
             user = self.request.user
         cart, created = Cart.objects.get_or_create(pk=cart_id, defaults={'user': user})
         self.request.session['cart_id'] = cart.pk
-        book_pk = self.kwargs.get('pk')
-        book = Book.objects.get(pk=book_pk)
-        book_in_cart, created = self.model.objects.get_or_create(cart=cart, book=book, defaults={'quantity': 1})
-        if not created:
-            book_in_cart.quantity += 1
-            book_in_cart.save()
+        book = Book.objects.get(pk=self.kwargs['pk'])
+        try:
+            book_in_cart = BookInCart.objects.get(cart=cart, book=book)
+        except BookInCart.DoesNotExist:
+            book_in_cart = BookInCart(cart=cart, book=book)
         return book_in_cart
+
+    # def get_object(self, queryset=None):
+    #     cart_id = self.request.session.get('cart_id')
+    #     if self.request.user.is_anonymous:
+    #         user = None
+    #     else:
+    #         user = self.request.user
+    #     cart, created = Cart.objects.get_or_create(pk=cart_id, defaults={'user': user})
+    #     self.request.session['cart_id'] = cart.pk
+    #     book_pk = self.kwargs.get('pk')
+    #     book = Book.objects.get(pk=book_pk)
+    #     book_in_cart, created = self.model.objects.get_or_create(cart=cart, book=book, defaults={'quantity': 1})
+    #     if not created:
+    #         #book_in_cart.quantity += 1
+    #         book_in_cart.save()
+    #     return book_in_cart
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -52,7 +66,7 @@ class AddBookToCart(CountInCart, UpdateView):
         return self.request.POST.get('next', '/')
 
 
-class CartView(DetailView):
+class CartView(CountInCart, DetailView):
     model = Cart
     template_name = 'cart/cart_view.html'
 

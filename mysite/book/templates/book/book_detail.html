@@ -8,10 +8,14 @@
 <div class="card mb-3" style="height: auto; width: 100%; background: #e5fcff">
     <div class="row no-gutters">
         <div class="col-md-4">
-            <img src="{{ object.image.url }}" class="card-img" alt="..." height="700">
+            {% if object.image %}
+                <img src="{{ object.image.url }}" class="card-img" alt="..." height="700">
+            {% else %}
+                <img src="/media/images/no_images/no_cover.jpg"  alt="..." height="533">
+            {% endif %}
             <a href="{% url 'add-to-cart' object.pk %}?next={% url 'book-detail' object.pk %}" class="card-link">
                 <div class="card-footer">
-                    <h5>{{ object.price }}&nbsp;&nbsp; <i class="fas fa-shopping-cart"></i>&nbsp;В корзину</h5>
+                    <h5>{{ object.price }}&nbsp;&nbsp; <i class="fas fa-cart-plus"></i>&nbsp;В корзину</h5>
                 </div>
             </a>
         </div>
@@ -22,7 +26,7 @@
                 {% for object in object.author.all %}
                 <p class="card-text">Автор - {{ object }}</p>{% endfor %}
                 <p class="card-text">{% for object in object.genre.all %}Жанр - {{ object }}{% endfor %}</p>
-                <p class="card-text">Серия - {{ object.series | boolparser }}</p>
+                <p class="card-text">Серия - {{ object.series | none }}</p>
                 <p class="card-text">Издательство - {{ object.publishing }}</p>
                 <p class="card-text">Год издания - {{ object.year }}</p>
                 <p class="card-text">Стр - {{ object.pages }}</p>
@@ -34,7 +38,7 @@
                 <p class="card-text">Количество книг в наличии - {{ object.sum }}</p>
                 <p class="card-text">Доступна для заказа - {{ object.active | boolparser }}</p>
                 <p class="card-text">Рейтинг - {{ object.rating }}</p>
-                <p class="card-text">Аннотация:</p><br><p class="card-text">{{ object.description }}</p>
+                <p class="card-text">Аннотация:</p><p class="card-text">{{ object.description }}</p>
                 <p class="card-text"></p>
             </div>
         </div>

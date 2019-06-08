@@ -6,21 +6,26 @@
 {% block content %}
 <h2 class="text-center">Оформление заказа</h2>
 <br>
-<div class="h5" style="padding: 0 150px">
+<div class="h5" style="padding: 0 50px">
     <table class="table shadow" style="background: #e5fcff">
         <thead>
         <tr>
             <th scope="col" style="width: 600px">Товары</th>
             <th scope="col">Цена BYN</th>
-            <th scope="col">Количество</th>
+            <th scope="col">Количество/Добавить</th>
             <th scope="col">Сумма всего</th>
-            <th scope="col">Удалить с корзины</th>
+            <th scope="col" style="width: 130px">Удалить с корзины</th>
         </tr>
         </thead>
         <tbody>
         {% for object in cart.book_in_cart.all %}
         <tr>
-            <td><img src="{{ object.book.image.url }}" height="100" width="70">&nbsp;&nbsp;
+            <td>
+                {% if object.book.image %}
+                <img src="{{ object.book.image.url }}" height="100" width="70">&nbsp;&nbsp;
+                {% else %}
+                <img src="/media/images/no_images/no_cover1.jpg" height="100" width="70">&nbsp;&nbsp;
+                {% endif %}
                 {% for object in object.book.author.all %}
                 {{ object }}
                 {% endfor %}&nbsp;
@@ -28,11 +33,12 @@
             </td>
             <td>{{ object.book.price }}</td>
             <td>
-                <form action="" method="POST" style="width: 133px;">
-                    {% csrf_token %}
-                    <input class="form-control" data-recalc="" step="1" min="1" max="999" name="item_180325"
-                           id="item_180325" type="number" value="{{ object.quantity }}">
-                </form>
+                {{ object.quantity }}
+                <a href="{% url 'add-to-cart' object.book.pk %}?next={% url 'cart-view' %}"
+                   class="btn btn-outline-primary">
+                   <div><i class="fas fa-plus"></i>
+                       <i class="fas fa-minus"></i></div><i class="fas fa-cart-plus h5"></i>
+                </a>
             </td>
             <td>{{ object.price_total }}</td>
             <td class="text-center">

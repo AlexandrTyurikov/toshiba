@@ -46,14 +46,11 @@ MY_APPS = [
     'directory',
     'cart',
     'order',
-    'reg',
+    'user',
 ]
 
-LOGIN_REDIRECT_URL = '/main/'
-
-# LOGIN_URL = '/login/'
-
 INSTALLED_APPS = MY_APPS + DEFAULT_APPS
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -100,6 +97,14 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
+
+
+LOGIN_REDIRECT_URL = '/main/'
+
+# LOGIN_URL = '/login/'
+
+# AUTH_USER_MODEL = 'user.UserCustom'
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

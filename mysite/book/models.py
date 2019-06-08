@@ -6,7 +6,7 @@ from directory.models import Author, Genre, Series, Publishing
 class Book(models.Model):
     name = models.CharField('Название книги', max_length=180)
     description = models.TextField('Аннотация', null=True, blank=True)
-    image = models.ImageField('Обложка', null=True, blank=True, upload_to='media')
+    image = models.ImageField('Обложка', null=True, blank=True, upload_to='cover')
     price = models.DecimalField('Цена', max_digits=10, decimal_places=2)
     author = models.ManyToManyField(Author, related_name='author', verbose_name='Автор')
     genre = models.ManyToManyField(Genre, related_name='genre', verbose_name='Жанр')

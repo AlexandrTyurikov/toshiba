@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}ку-ку{% endblock %}
+
+{% block content %}
+<div class="center">
+    <h2>{{ object.book.name }}</h2>
+    <form action="" method="POST" style="width: 133px;">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="hidden" name="next" value="{{next}}">
+        <button type="submit" class="btn btn-outline-primary">Изменить</button>
+    </form>
+</div>
+{% endblock %}

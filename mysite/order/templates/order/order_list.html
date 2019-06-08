@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}ку-ку2{% endblock %}
+
+{% block content %}
+
+<h2 class="text-center">Заказы</h2>
+<br>
+{% for object in object_list %}
+{% if object.cart.all %}
+<div class="h5" style="padding: 0 0px">
+    <table class="table shadow" style="background: #e5fcff">
+        <thead>
+        <tr>
+            <th scope="col">Дата заказа</th>
+            <th scope="col" style="width: 550px">Товары</th>
+            <th scope="col">Цена BYN</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Сумма всего</th>
+<!--            <th scope="col">Действия</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in object.book_in_cart.all %}
+        <tr>
+            <td>{{ object.creation_date }}</td>
+            <td>
+                {% if object.book.image %}
+                <img src="{{ object.book.image.url }}" height="100" width="70">&nbsp;&nbsp;
+                {% else %}
+                <img src="/media/images/no_images/no_cover1.jpg" height="100" width="70">&nbsp;&nbsp;
+                {% endif %}
+                {% for object in object.book.author.all %}
+                {{ object }}
+                {% endfor %}&nbsp;
+                "{{ object.book.name }}"
+            </td>
+            <td>{{ object.book.price }}</td>
+            <td>{{ object.quantity }}</td>
+            <td>{{ object.price_total }}</td>
+<!--            <td>-->
+<!--                <a class="btn btn-outline-warning" href="{% url 'order-update' object.pk %}"><i-->
+<!--                        class="fas fa-pencil-alt"></i>-->
+<!--                </a>-->
+<!--                <a class="btn btn-outline-danger" href="{% url 'order-delete' object.pk %}"><i-->
+<!--                        class="fas fa-trash-alt"></i>-->
+<!--                </a>-->
+<!--            </td>-->
+        </tr>
+        {% endfor %}
+        <tr>
+            <th>Итого</th>
+            <th></th>
+            <th></th>
+            <th>{{ object.book_in_cart_count }} шт.</th>
+            <th>{{ object.total_price }} BYN</th>
+            <th></th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endfor %}
+{% if object_list > 0 %}
+<div class="text-center">
+    <h5 class="text-center">У Вас нет ни одного заказа.</h5><br>
+    <a href="{% url 'cart-view' %}">
+        <button class="btn btn-outline-warning btn-lg shadow">
+            Оформить заказ!
+        </button>
+    </a>
+</div>
+{% endif %}
+
+{% endblock %}

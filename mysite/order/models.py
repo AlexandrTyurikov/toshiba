@@ -15,7 +15,7 @@ class OrderStatus(models.Model):
 
 
 class Order(models.Model):
-    cart = models.ForeignKey(Cart, verbose_name='Корзина', on_delete=models.PROTECT)
+    cart = models.ForeignKey(Cart, verbose_name='Корзина', related_name='cart', on_delete=models.PROTECT)
     status = models.ForeignKey(OrderStatus, verbose_name='Статус заказа', on_delete=models.PROTECT)
     name = models.CharField('ФИО', max_length=60)
     phone = models.CharField('Контактный телефон', help_text='+375**-***-**-**', max_length=16)

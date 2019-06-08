@@ -7,16 +7,23 @@
 <h2>Главная страница</h2><br>
 <form action="" method="get" class="form-inline">
     {{ form }}
-    <input class="form-control btn-lg mr-sm-2 shadow" type="search" placeholder="Поиск"
-           aria-label="Search"
-           name="nnn">
-    <button class="btn btn-outline-secondary my-2 my-sm-4 shadow " type="submit"><i class="fas fa-search"></i></button>
+    <div class="mx-auto">
+        <input class="form-control btn-lg mr-sm-2 shadow" style="width: 600px" type="search" placeholder="Поиск"
+               aria-label="Search"
+               name="nnn">
+        <button class="btn btn-outline-secondary my-2 my-sm-4 shadow" type="submit"><i class="fas fa-search"></i>
+        </button>
+    </div>
 </form>
-<div class="card-columns" style="display: inline">
+<div class="row flex-wrap mb-5">
     {% for object in object_list %}
-    <div class="card shadow text-center" style="width: 15rem; background: #e5fcff">
+    <div class="card shadow text-center justify-content-between" style="width: 200px; background: #e5fcff">
         <a href="{% url 'book-detail' object.pk %}" style="text-decoration: none">
-            <img src="{{ object.image.url }}" class="card-img-top" alt="..." height="280">
+            {% if object.image %}
+                <img src="{{ object.image.url }}" class="card-img-top" alt="..." height="280">
+            {% else %}
+                <img src="/media/images/no_images/no_cover1.jpg" class="card-img-top" alt="..." height="280">
+             {% endif %}
             <div class="card-body">
                 <h5 class="card-title">{{object.name}}</h5>
                 <p class="card-text">
@@ -29,7 +36,7 @@
         </a>
         <a href="{% url 'add-to-cart' object.pk %}?next=/main/" class="card-link">
             <div class="card-footer">
-                <h5>{{ object.price }}&nbsp;&nbsp; <i class="fas fa-shopping-cart"></i>&nbsp;В корзину</h5>
+                <h5>{{ object.price }} BYN <i class="fas fa-cart-plus"></i></h5>
             </div>
         </a>
     </div>
